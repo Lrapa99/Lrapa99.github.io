@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta BD-COOSALUD ONLINE</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+    integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+  <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+  <!-- ↓↓ FavIcon ↓↓ -->
+  <link rel="icon" type="image/png" sizes="32x32"
+    href="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png">
+  <!-- ↑↑ FavIcon ↑↑ -->
+
+  <style>
+    .reg-allow {
+      color: #28a745;
+    }
+
+    .reg-other {
+      color: #2382ff;
+    }
+
+    .reg-departament {
+      color: #FF7400;
+    }
+
+    .reg-inactive {
+      color: red;
+      text-decoration: line-through;
+      /* background: #FFC3C3; */
+    }
+
+    .icon-contributory {
+      font-size: 30px;
+      display: block;
+    }
+
+    .search-section {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .table-data tbody {
+      position: relative;
+    }
+
+    .table-data tbody tr {
+      position: relative;
+      border-bottom: 2px solid #eee;
+      transition: all .2s ease;
+    }
+
+    .table-data tbody tr:hover {
+      border-bottom: 2px solid #cccccc;
+      background: rgb(250, 250, 250);
+    }
+
+    .count-register {
+      text-align: right;
+    }
+
+    footer.page-footer {
+      width: 100%;
+    }
+
+    .table-data tbody td {
+      font-size: 16px;
+    }
+
+    .table-data td,
+    .table-data thead th,
+    .table-data tbody th {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .table-data tbody td span.badge {
+      font-size: 14px;
+    }
+
+    .container-fluid {
+      /* margin: 0 2em; */
+      width: 95%;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <img src="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png" alt="MDN">
+    <h1 class="mb-2 mb-4">Consulta BD-COOSALUD ONLINE</h1>
+    <div class="search-section mt-1 mb-1 mb-4">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="documento" class="pl-2">Documento</label>
+          <input type="text" class="form-control ml-3 form-control-sm" id="documento"
+            placeholder="Ingrese el documento">
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <button class="btn btn-success btn-search btn-sm ml-3"><i class="fas fa-search"></i> Buscar</button>
+        <button id="btnExportar" class="btn btn-success" style="margin-left: 10px"><i class="fas fa-file-excel"></i>
+          Exportar datos a Excel</button>
+        <div class='custom-control custom-checkbox w-100'>
+          <input type='checkbox' class='custom-control-input' id='autodownload'>
+          <label class='custom-control-label justify-content-start' for='autodownload'>Descarga Automatica</label>
+        </div>
+
+      </form>
+      <div class="count-register">
+        <div class="form-group">
+          <input type='checkbox' class='custom-control-input' id='auto_download'>
+          <label for="separator-register" class="pl-2">Separador de Registro</label>
+          <input type="text" class="form-control ml-3 form-control-sm" id="separator-register"
+            placeholder="Ejemplo , ; : - " value="">
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <div>
+          <h5>Registros <span class="badge badge-pill badge-success">0</span></h5>
+
+        </div>
+      </div>
+    </div>
+    <div id="dates">
+      <table id="tabla" class="table table-data">
+        <thead>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <!-- <th scope="col">Carnet</th> -->
+            <th scope="col">Tipo Doc</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Nombre1</th>
+            <th scope="col">Nombre2</th>
+            <th scope="col">Apellidos1</th>
+            <th scope="col">Apellidos2</th>
+            <th scope="col">Nombre completo</th>
+            <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Ips Asignada</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Nivel Sisben</th>
+            <th scope="col">Regimen</th>
+            <th scope="col">Rango</th>
+            <th scope="col">Tipo Poblacion</th>
+            <th scope="col">Poblacion Descripcion</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Celular</th>
+            <th scope="col" style="display: none;">Descargar</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="opciones">
+      <button class="btn btn-success btn-download-certificates"><i class="fas fa-download"></i> Descargar
+        Certificados</button>
+      <button class="btn btn-danger btn-remove-data"><i class="fas fa-trash"></i> Borrar todo</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+    const $btnExportar = document.querySelector("#btnExportar"),
+      $tabla = document.querySelector("#tabla");
+    $btnExportar.addEventListener("click", function () {
+      let tableExport = new TableExport($tabla, {
+        exportButtons: false,
+        filename: "ConsultaBDCOOSALUD",
+        sheetname: "ResultadosConsultaMasiva",
+      });
+      let datos = tableExport.getExportData();
+      let preferenciasDocumento = datos.tabla.xlsx;
+      tableExport.export2file(preferenciasDocumento.data,
+        preferenciasDocumento.mimeType,
+        preferenciasDocumento.filename,
+        preferenciasDocumento.fileExtension,
+        preferenciasDocumento.merges,
+        preferenciasDocumento.RTL,
+        preferenciasDocumento.sheetname);
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      var m = [];
+      var dates = $("#dates");
+      var baseUrl = "https://apiautogestion.coosalud.com/vAfiliado/GetByTipoDocAndDoc/";
+      var tipDocumentos = {
+        1: "CC",
+        2: "TI",
+        3: "RC",
+        4: "CE",
+        5: "PE",
+        6: "PT",
+        7: "SC"
+      } //Add Otros TipDoc
+
+      function copyContent(element) {
+        seleccionaTexto(this);
+        document.execCommand('copy');
+      }
+
+      function seleccionaTexto(element) {
+        var doc = document,
+          text = element,
+          range,
+          selection;
+        if (doc.body.createTextRange) { //ms
+          range = doc.body.createTextRange();
+          range.moveToElementText(text);
+          range.select();
+        } else if (window.getSelection) { //all others
+          selection = window.getSelection();
+          range = doc.createRange();
+          range.selectNodeContents(text);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+
+      function respuesta(response) {
+        //console.log(response);
+        var SegundoApellido = response.segundo_apellido == null ? " " : response.segundo_apellido;
+        var SegundoNombre = response.segundo_nombre == null ? " " : response.segundo_nombre;
+        var reg = $(".table-data tbody tr").length + 1;
+        var nombreCompleto = response.primer_nombre + " " + SegundoNombre + " " + response.primer_apellido + " " + SegundoApellido
+         var iconContributory = response.regimen.toUpperCase() == "C" ? '<i class="icon-contributory fas fa-money-bill-alt"></i>' : '';
+
+        $(".table-data tbody").append("<tr>" +
+          // "<th><div class='custom-control custom-checkbox'><input type='checkbox' class='reg-check custom-control-input' id='reg_" + reg + "'><label class='custom-control-label' for='reg_" + reg + "'></label></div>" +
+          // "<th><span class='reg-carnet'>" + response.CARNET + "</span></th>" + -->
+          "<th><span class='reg-tip-id'>" + response.tipo_identificacion + "</span></th>" +
+          "<th><span class='reg-num-id'>" + response.numero_identificacion.trim() + "</span></th>" +
+          "<td><span class='reg-name'>" + response.primer_nombre + "</span></td>" +
+          "<td><span class='reg-name'>" + SegundoNombre + "</span></td>" +
+          "<td><span class='reg-apellido'>" + response.primer_apellido + "</span></td>" +
+          "<td><span class='reg-apellido'>" + SegundoApellido + "</span></td>" +
+          "<td><span class='reg-nombreCompleto'>" + nombreCompleto + "</span></td>" +
+          "<td><span class='reg-fec-nac'>" + response.fecha_nacimiento + "</span></td>" +
+          "<td><span class='reg-fec-nac'>" + response.sexo + "</span></td>" +
+              "<td><span class='reg-ciud'>" + response.nombreciudadafiliado + "</span></td>" +
+            "<td><span class='reg-dep'>" + response.nombredepartamentoafiliado + "</span></td>" +
+                "<td><span class='reg-ips'>" + response.ips_primaria + "</span></td>" +
+            "<td><span class='reg-estado'>" + (response.estado == "AC" ? "ACTIVO":"INACTIVO") + "</span></td>" +
+                "<td><span class='reg-ips'>" + response.nivel_sisben + "</span></td>" +
+            "<td>"  + iconContributory + "<span class='reg-regimen'>"  + response.regimen.toUpperCase() + "</span></td>" +
+            "<th><span class='reg-carnet'>" + response.nivel_sisben + "</span></th>" +
+            "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
+            "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
+            "<th><span class='reg-carnet'>" + response.direccion + "</span></th>" +
+            "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
+            "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
+                "<td style='display: none;'><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" + 
+                response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fas fa-download'></i></a>" +
+                "</tr>"
+                );
+        
+                var regCesar = $(".table-data tbody tr td span.reg-dep:contains(CESAR)").parent().parent();
+        
+                var regValledupar = $("td span.reg-ciud:contains(VALLEDUPAR)", regCesar).parent().parent();
+                var regNotValledupar = $("td span.reg-ciud", regCesar).parent().parent().not(regValledupar);
+        
+                var regCalidadMedica = $("td span.reg-ips:contains(CALIDAD MEDICA IPS)", regValledupar).parent().parent();
+                var regNotCalidadMedica = $("td span.reg-ips", regValledupar).parent().parent().not(regCalidadMedica);
+        
+                var regRetired = $(".table-data tbody td span.reg-estado:contains(INACTIVO)").parent().parent();
+                
+                var regContributory = $(".table-data tbody td span.reg-regimen:contains(CONTRIBUTIVO)");
+                regContributory.addClass("badge badge-pill badge-info");
+                regNotValledupar.addClass("reg-departament");
+                regCalidadMedica.addClass("reg-allow");
+                regNotCalidadMedica.addClass("reg-other");
+                regRetired.addClass("reg-inactive");
+                
+                $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
+                
+                
+                $(".reg-check").unbind("click");
+                $(".reg-check").click(function() {
+                  var span = $(".reg-num-id", $(this).parent().parent().parent());
+                    span[0].click();
+                });
+                
+                $("span[class^='reg-']").unbind("click");
+                $("span[class^='reg-']").click(copyContent);
+                
+                if($('#autodownload').prop('checked'))
+                  $(".table-data tbody td span a.link_certificate").last()[0].click();
+            }
+        
+          $(".btn-remove-data").on("click", function(){
+        
+            m = [];
+            
+            $(".table-data tbody tr").fadeOut(500, function(){
+                $(this).remove();
+                $(window).scrollTop(0);
+                $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
+              });
+          });
+        
+        $(".btn-download-certificates").click(function(){
+          var enlaces = $(".table-data tbody tr td a.link_certificate");
+        
+           $(enlaces).each(function(index,element){
+             element.click();
+           });
+        
+        //   console.log(enlaces);
+        
+        });
+
+          function consulta(doc, codtip) {
+
+            var stt = new Object();
+            stt.url = baseUrl + tipDocumentos[codtip] + "/" + doc;
+            stt.async = true;
+            stt.crossDomain = true;
+            stt.method = "GET";
+
+
+            $.ajax(stt).done(r => {
+              //var dt = JSON.parse(r.jsonObject);
+              //console.log(dt);
+
+              /*
+              console.log(dt.tipo_identificacion);
+              console.log(dt.numero_identificacion);
+              console.log(dt.primer_nombre);
+              console.log(dt.primer_apellido);
+              console.log(dt.fecha_nacimiento);
+              console.log(dt.sexo);
+              console.log(dt.regimen);
+              console.log(dt.estado);*/
+
+              console.log(r.codigo);
+              if (r.codigo == 100) {
+                if (codtip < 7)
+                  consulta(doc, codtip + 1);
+              }
+              else {
+                var dt = JSON.parse(r.jsonObject);
+                respuesta(dt);
+                console.log(dt);
+              }
+            });
+          }
+
+$(".btn-search").click(function (e) {
+            e.preventDefault();
+            $('.search-section .count-register h5 span').text(0);
+
+            if ($("#separator-register").val() == "")
+              m = $("#documento").val().split("\t");
+            else
+              m = $("#documento").val().split($("#separator-register").val());
+
+            $("#documento").val("");
+            $(".table-data tbody").text("");
+            for (var doc of m) {
+              consulta(doc, 1);
+            }
+
+          });
+    });
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+
+  <!--Footer-->
+  <footer class="page-footer font-small stylish-color-dark pt-4 mt-4">
+
+    <hr>
+
+    <!--Call to action
+  <div class="row text-center py-3">
+      <div class="col-md-12">
+            <ul>
+                <li class="list-inline-item">
+                    <h5 class="mb-1">Register for free</h5>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#!" class="btn btn-danger btn-rounded">Sign up!</a>
+                </li>
+            </ul>
+      </div>
+  </div>
+  -->
+    <!--/.Call to action-->
+
+
+    <!--Social buttons
+  <div class="text-center social-buttons">
+      <ul class="list-unstyled list-inline">
+          <li class="list-inline-item">
+              <a class="btn-floating btn-sm btn-fb mx-1">
+                  <i class="fab fa-facebook"> </i>
+              </a>
+          </li>
+          <li class="list-inline-item">
+              <a class="btn-floating btn-sm btn-tw mx-1">
+                  <i class="fab fa-twitter"> </i>
+              </a>
+          </li>
+          <li class="list-inline-item">
+              <a class="btn-floating btn-sm btn-gplus mx-1">
+                  <i class="fab fa-google-plus"> </i>
+              </a>
+          </li>
+          <li class="list-inline-item">
+              <a class="btn-floating btn-sm btn-li mx-1">
+                  <i class="fab fa-linkedin"> </i>
+              </a>
+          </li>
+          <li class="list-inline-item">
+              <a class="btn-floating btn-sm btn-dribbble mx-1">
+                  <i class="fab fa-dribbble"> </i>
+              </a>
+          </li>
+      </ul>
+  </div>
+  -->
+    <!--/.Social buttons-->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+
+      <a href="#">Consulta BD COOSALUD 1.3.1.4</a> © 2021
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+</body>
+
+</html>
