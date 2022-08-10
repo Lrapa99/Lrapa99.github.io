@@ -3,13 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ConsultaCoosalud</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
-    integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/6f4c79b44d.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
   <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
   <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+ 
   <!-- ↓↓ FavIcon ↓↓ -->
   <link rel="icon" type="image/png" sizes="32x32"
     href="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png">
@@ -102,9 +104,9 @@
             placeholder="Ingrese el documento">
 
         </div>
-        <button class="btn btn-success btn-search btn-sm ml-3"><i class="fas fa-search"></i> Buscar</button>
-        <button id="btnExportar" class="btn btn-success" style="margin-left: 10px"><i class="fas fa-file-excel"></i>
-          Exportar datos a Excel</button>
+        <button class="btn btn-success btn-search btn-sm ml-3"><i class="fa-solid fa-magnifying-glass fa-beat" style="--fa-animation-duration: 2s;"></i> Buscar</button>
+        <button id="btnExportar" class="btn btn-success" style="margin-left: 10px"><i class="fa-solid fa-file-export"></i>
+          Exportar a Excel</button>
         <div class='custom-control custom-checkbox w-100'>
           <input type='checkbox' class='custom-control-input' id='autodownload'>
           <label class='custom-control-label justify-content-start' for='autodownload'>Descarga Automatica</label>
@@ -127,20 +129,19 @@
           <tr>
             <th scope="col">Tipo Doc</th>
             <th scope="col">Documento</th>
-            <th scope="col">Nombre1</th>
-            <th scope="col">Nombre2</th>
-            <th scope="col">Apellidos1</th>
-            <th scope="col">Apellidos2</th>
+            <th scope="col">Primer Nombre</th>
+            <th scope="col">Segundo Nombre</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Segundo Apellidos</th>
             <th scope="col">Fecha Nacimiento</th>
             <th scope="col">Sexo</th>
             <th scope="col">Ciudad</th>
             <th scope="col">Departamento</th>
-            <th scope="col">Ips Asignada</th>
+            <th scope="col">Ips Primaria</th>
             <th scope="col">Estado</th>
             <th scope="col">Nivel Sisben</th>
             <th scope="col">Regimen</th>
             <th scope="col">Direccion</th>
-            <th scope="col">Telefono</th>
             <th scope="col">Celular</th>
           </tr>
         </thead>
@@ -149,9 +150,9 @@
       </table>
     </div>
     <div class="opciones">
-      <button class="btn btn-success btn-download-certificates"><i class="fas fa-download"></i> Descargar
+      <button class="btn btn-success btn-download-certificates"><i class="fa-solid fa-arrow-down"></i> Descargar
         Certificados</button>
-      <button class="btn btn-danger btn-remove-data"><i class="fas fa-trash"></i> Borrar todo</button>
+      <button class="btn btn-danger btn-remove-data "><i class="fa-solid fa-trash"></i> Borrar Todo </button>
     </div>
   </div>
 
@@ -188,10 +189,10 @@
   </script>
   <script>
     $(document).ready(function () {
-      var m = [];
-      var dates = $("#dates");
-      var baseUrl = "https://apiautogestion.coosalud.com/vAfiliado/GetByTipoDocAndDoc/";
-      var tipDocumentos = {
+      let m = [];
+      let dates = $("#dates");
+      let baseUrl = "https://apiautogestion.coosalud.com/vAfiliado/GetByTipoDocAndDoc/";
+      const tipDocumentos = {
         1: "CC",
         2: "TI",
         3: "RC",
@@ -207,7 +208,7 @@
       }
 
       function seleccionaTexto(element) {
-        var doc = document,
+        let doc = document,
           text = element,
           range,
           selection;
@@ -226,50 +227,46 @@
 
       function respuesta(response) {
         //console.log(response);
-        var SegundoApellido = response.segundo_apellido == null ? "" : response.segundo_apellido;
-        var SegundoNombre = response.segundo_nombre == null ? "" : response.segundo_nombre;
-        var reg = $(".table-data tbody tr").length + 1;
+        let SegundoApellido = response.segundo_apellido == null ? "" : response.segundo_apellido;
+        let SegundoNombre = response.segundo_nombre == null ? "" : response.segundo_nombre;
+        let reg = $(".table-data tbody tr").length + 1;
         //var nombreCompleto = response.primer_nombre + " " + SegundoNombre + " " + response.primer_apellido + " " + SegundoApellido
-        var iconContributory = response.regimen.toUpperCase() == "C" ? '<i class="icon-contributory fas fa-money-bill-alt"></i>' : '';
+        let iconContributory = response.regimen.toUpperCase() == "C" ? '<i class="icon-contributory fas fa-money-bill-alt"></i>' : '';
 
         $(".table-data tbody").append("<tr>" +
           "<th><span class='reg-tip-id'>" + response.tipo_identificacion + "</span></th>" +
           "<th><span class='reg-num-id'>" + response.numero_identificacion.trim() + "</span></th>" +
-          "<td><span class='reg-name'>" + response.primer_nombre + "</span></td>" +
-          "<td><span class='reg-name'>" + SegundoNombre + "</span></td>" +
-          "<td><span class='reg-apellido'>" + response.primer_apellido + "</span></td>" +
-          "<td><span class='reg-apellido'>" + SegundoApellido + "</span></td>" +
+          "<td><span class='reg-name1'>" + response.primer_nombre + "</span></td>" +
+          "<td><span class='reg-name2'>" + SegundoNombre + "</span></td>" +
+          "<td><span class='reg-apellido1'>" + response.primer_apellido + "</span></td>" +
+          "<td><span class='reg-apellido2'>" + SegundoApellido + "</span></td>" +
           //"<td><span class='reg-nombreCompleto'>" + nombreCompleto + "</span></td>" +
           "<td><span class='reg-fec-nac'>" + response.fecha_nacimiento + "</span></td>" +
-          "<td><span class='reg-fec-nac'>" + response.sexo + "</span></td>" +
-          "<td><span class='reg-ciud'>" + response.nombreciudadafiliado + "</span></td>" +
-          "<td><span class='reg-dep'>" + response.nombredepartamentoafiliado + "</span></td>" +
+          "<td><span class='reg-sexo'>" + response.sexo + "</span></td>" +
+          "<td><span class='reg-ciudad'>" + response.nombreciudadafiliado + "</span></td>" +
+          "<td><span class='reg-depart'>" + response.nombredepartamentoafiliado + "</span></td>" +
           "<td><span class='reg-ips'>" + response.ips_primaria + "</span></td>" +
           "<td><span class='reg-estado'>" + (response.estado == "AC" ? "ACTIVO" : "INACTIVO") + "</span></td>" +
-          "<td><span class='reg-ips'>" + response.nivel_sisben + "</span></td>" +
+          "<td><span class='reg-nivel_sisben'>" + response.nivel_sisben + "</span></td>" +
           "<td>" + iconContributory + "<span class='reg-regimen'>" + (response.regimen == "S" ? "SUBSIDIADO" : "CONTRIBUTIVO") + "</span></td>" +
-          "<th><span class='reg-carnet'>" + response.nivel_sisben + "</span></th>" +
-          "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
-          "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
-          "<th><span class='reg-carnet'>" + response.direccion + "</span></th>" +
-          "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
-          "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
-          "<td style='display: none;'><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" +
-          response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fas fa-download'></i></a>" +
+          "<th><span class='reg-direccion'>" + response.direccion + "</span></th>" +
+          "<th><span class='reg-celular'>" + response.celular + "</span></th>" +
+          "<td><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" +
+          response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fa-solid fa-file-arrow-down fa-beat-fade'></i></a>" +
           "</tr>"
         );
 
-        var regCesar = $(".table-data tbody tr td span.reg-dep:contains(CESAR)").parent().parent();
+        let regCesar = $(".table-data tbody tr td span.reg-depart:contains(CESAR)").parent().parent();
 
-        var regValledupar = $("td span.reg-ciud:contains(VALLEDUPAR)", regCesar).parent().parent();
-        var regNotValledupar = $("td span.reg-ciud", regCesar).parent().parent().not(regValledupar);
+        let regValledupar = $("td span.reg-ciudad:contains(VALLEDUPAR)", regCesar).parent().parent();
+        let regNotValledupar = $("td span.reg-ciudad", regCesar).parent().parent().not(regValledupar);
 
-        var regCalidadMedica = $("td span.reg-ips:contains(CALIDAD MEDICA IPS)", regValledupar).parent().parent();
-        var regNotCalidadMedica = $("td span.reg-ips", regValledupar).parent().parent().not(regCalidadMedica);
+        let regCalidadMedica = $("td span.reg-ips:contains(CALIDAD MEDICA IPS)", regValledupar).parent().parent();
+        let regNotCalidadMedica = $("td span.reg-ips", regValledupar).parent().parent().not(regCalidadMedica);
 
-        var regRetired = $(".table-data tbody td span.reg-estado:contains(INACTIVO)").parent().parent();
+        let regRetired = $(".table-data tbody td span.reg-estado:contains(INACTIVO)").parent().parent();
 
-        var regContributory = $(".table-data tbody td span.reg-regimen:contains(CONTRIBUTIVO)");
+        let regContributory = $(".table-data tbody td span.reg-regimen:contains(CONTRIBUTIVO)");
         regContributory.addClass("badge badge-pill badge-info");
         regNotValledupar.addClass("reg-departament");
         regCalidadMedica.addClass("reg-allow");
@@ -281,7 +278,7 @@
 
         $(".reg-check").unbind("click");
         $(".reg-check").click(function () {
-          var span = $(".reg-num-id", $(this).parent().parent().parent());
+          let span = $(".reg-num-id", $(this).parent().parent().parent());
           span[0].click();
         });
 
@@ -304,7 +301,7 @@
       });
 
       $(".btn-download-certificates").click(function () {
-        var enlaces = $(".table-data tbody tr td a.link_certificate");
+        let enlaces = $(".table-data tbody tr td a.link_certificate");
 
         $(enlaces).each(function (index, element) {
           element.click();
