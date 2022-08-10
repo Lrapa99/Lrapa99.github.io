@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
-  <title>Consulta BD-COOSALUD ONLINE</title>
+  <title>ConsultaCoosalud</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
     integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -93,7 +93,7 @@
 <body>
   <div class="container-fluid">
     <img src="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png" alt="MDN">
-    <h1 class="mb-2 mb-4">Consulta BD-COOSALUD ONLINE</h1>
+    <h1 class="mb-2 mb-4">Consulta coosalud</h1>
     <div class="search-section mt-1 mb-1 mb-4">
       <form class="form-inline">
         <div class="form-group">
@@ -137,7 +137,6 @@
             <th scope="col">Nombre2</th>
             <th scope="col">Apellidos1</th>
             <th scope="col">Apellidos2</th>
-            <th scope="col">Nombre completo</th>
             <th scope="col">Fecha Nacimiento</th>
             <th scope="col">Sexo</th>
             <th scope="col">Ciudad</th>
@@ -231,8 +230,8 @@
         var SegundoApellido = response.segundo_apellido == null ? " " : response.segundo_apellido;
         var SegundoNombre = response.segundo_nombre == null ? " " : response.segundo_nombre;
         var reg = $(".table-data tbody tr").length + 1;
-        var nombreCompleto = response.primer_nombre + " " + SegundoNombre + " " + response.primer_apellido + " " + SegundoApellido
-         var iconContributory = response.regimen.toUpperCase() == "C" ? '<i class="icon-contributory fas fa-money-bill-alt"></i>' : '';
+        //var nombreCompleto = response.primer_nombre + " " + SegundoNombre + " " + response.primer_apellido + " " + SegundoApellido
+        var iconContributory = response.regimen.toUpperCase() == "C" ? '<i class="icon-contributory fas fa-money-bill-alt"></i>' : '';
 
         $(".table-data tbody").append("<tr>" +
           // "<th><div class='custom-control custom-checkbox'><input type='checkbox' class='reg-check custom-control-input' id='reg_" + reg + "'><label class='custom-control-label' for='reg_" + reg + "'></label></div>" +
@@ -243,133 +242,140 @@
           "<td><span class='reg-name'>" + SegundoNombre + "</span></td>" +
           "<td><span class='reg-apellido'>" + response.primer_apellido + "</span></td>" +
           "<td><span class='reg-apellido'>" + SegundoApellido + "</span></td>" +
-          "<td><span class='reg-nombreCompleto'>" + nombreCompleto + "</span></td>" +
+          //"<td><span class='reg-nombreCompleto'>" + nombreCompleto + "</span></td>" +
           "<td><span class='reg-fec-nac'>" + response.fecha_nacimiento + "</span></td>" +
           "<td><span class='reg-fec-nac'>" + response.sexo + "</span></td>" +
-              "<td><span class='reg-ciud'>" + response.nombreciudadafiliado + "</span></td>" +
-            "<td><span class='reg-dep'>" + response.nombredepartamentoafiliado + "</span></td>" +
-                "<td><span class='reg-ips'>" + response.ips_primaria + "</span></td>" +
-            "<td><span class='reg-estado'>" + (response.estado == "AC" ? "ACTIVO":"INACTIVO") + "</span></td>" +
-                "<td><span class='reg-ips'>" + response.nivel_sisben + "</span></td>" +
-            "<td>"  + iconContributory + "<span class='reg-regimen'>"  + response.regimen.toUpperCase() + "</span></td>" +
-            "<th><span class='reg-carnet'>" + response.nivel_sisben + "</span></th>" +
-            "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
-            "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
-            "<th><span class='reg-carnet'>" + response.direccion + "</span></th>" +
-            "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
-            "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
-                "<td style='display: none;'><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" + 
-                response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fas fa-download'></i></a>" +
-                "</tr>"
-                );
-        
-                var regCesar = $(".table-data tbody tr td span.reg-dep:contains(CESAR)").parent().parent();
-        
-                var regValledupar = $("td span.reg-ciud:contains(VALLEDUPAR)", regCesar).parent().parent();
-                var regNotValledupar = $("td span.reg-ciud", regCesar).parent().parent().not(regValledupar);
-        
-                var regCalidadMedica = $("td span.reg-ips:contains(CALIDAD MEDICA IPS)", regValledupar).parent().parent();
-                var regNotCalidadMedica = $("td span.reg-ips", regValledupar).parent().parent().not(regCalidadMedica);
-        
-                var regRetired = $(".table-data tbody td span.reg-estado:contains(INACTIVO)").parent().parent();
-                
-                var regContributory = $(".table-data tbody td span.reg-regimen:contains(CONTRIBUTIVO)");
-                regContributory.addClass("badge badge-pill badge-info");
-                regNotValledupar.addClass("reg-departament");
-                regCalidadMedica.addClass("reg-allow");
-                regNotCalidadMedica.addClass("reg-other");
-                regRetired.addClass("reg-inactive");
-                
-                $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
-                
-                
-                $(".reg-check").unbind("click");
-                $(".reg-check").click(function() {
-                  var span = $(".reg-num-id", $(this).parent().parent().parent());
-                    span[0].click();
-                });
-                
-                $("span[class^='reg-']").unbind("click");
-                $("span[class^='reg-']").click(copyContent);
-                
-                if($('#autodownload').prop('checked'))
-                  $(".table-data tbody td span a.link_certificate").last()[0].click();
-            }
-        
-          $(".btn-remove-data").on("click", function(){
-        
-            m = [];
-            
-            $(".table-data tbody tr").fadeOut(500, function(){
-                $(this).remove();
-                $(window).scrollTop(0);
-                $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
-              });
-          });
-        
-        $(".btn-download-certificates").click(function(){
-          var enlaces = $(".table-data tbody tr td a.link_certificate");
-        
-           $(enlaces).each(function(index,element){
-             element.click();
-           });
-        
-        //   console.log(enlaces);
-        
+          "<td><span class='reg-ciud'>" + response.nombreciudadafiliado + "</span></td>" +
+          "<td><span class='reg-dep'>" + response.nombredepartamentoafiliado + "</span></td>" +
+          "<td><span class='reg-ips'>" + response.ips_primaria + "</span></td>" +
+          "<td><span class='reg-estado'>" + (response.estado == "AC" ? "ACTIVO" : "INACTIVO") + "</span></td>" +
+          "<td><span class='reg-ips'>" + response.nivel_sisben + "</span></td>" +
+          "<td>" + iconContributory + "<span class='reg-regimen'>" + response.regimen.toUpperCase() + "</span></td>" +
+          "<th><span class='reg-carnet'>" + response.nivel_sisben + "</span></th>" +
+          "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
+          "<th><span class='reg-carnet'>" + response.tipo_poblacion + "</span></th>" +
+          "<th><span class='reg-carnet'>" + response.direccion + "</span></th>" +
+          "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
+          "<th><span class='reg-carnet'>" + response.celular + "</span></th>" +
+          "<td style='display: none;'><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" +
+          response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fas fa-download'></i></a>" +
+          "</tr>"
+        );
+
+        var regCesar = $(".table-data tbody tr td span.reg-dep:contains(CESAR)").parent().parent();
+
+        var regValledupar = $("td span.reg-ciud:contains(VALLEDUPAR)", regCesar).parent().parent();
+        var regNotValledupar = $("td span.reg-ciud", regCesar).parent().parent().not(regValledupar);
+
+        var regCalidadMedica = $("td span.reg-ips:contains(CALIDAD MEDICA IPS)", regValledupar).parent().parent();
+        var regNotCalidadMedica = $("td span.reg-ips", regValledupar).parent().parent().not(regCalidadMedica);
+
+        var regRetired = $(".table-data tbody td span.reg-estado:contains(INACTIVO)").parent().parent();
+
+        var regContributory = $(".table-data tbody td span.reg-regimen:contains(CONTRIBUTIVO)");
+        regContributory.addClass("badge badge-pill badge-info");
+        regNotValledupar.addClass("reg-departament");
+        regCalidadMedica.addClass("reg-allow");
+        regNotCalidadMedica.addClass("reg-other");
+        regRetired.addClass("reg-inactive");
+
+        $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
+
+
+        $(".reg-check").unbind("click");
+        $(".reg-check").click(function () {
+          var span = $(".reg-num-id", $(this).parent().parent().parent());
+          span[0].click();
         });
 
-          function consulta(doc, codtip) {
+        $("span[class^='reg-']").unbind("click");
+        $("span[class^='reg-']").click(copyContent);
 
-            var stt = new Object();
-            stt.url = baseUrl + tipDocumentos[codtip] + "/" + doc;
-            stt.async = true;
-            stt.crossDomain = true;
-            stt.method = "GET";
+        if ($('#autodownload').prop('checked'))
+          $(".table-data tbody td span a.link_certificate").last()[0].click();
+      }
+
+      $(".btn-remove-data").on("click", function () {
+
+        m = [];
+
+        $(".table-data tbody tr").fadeOut(500, function () {
+          $(this).remove();
+          $(window).scrollTop(0);
+          $('.search-section .count-register h5 span').text($(".table-data tbody tr").length);
+        });
+      });
+
+      $(".btn-download-certificates").click(function () {
+        var enlaces = $(".table-data tbody tr td a.link_certificate");
+
+        $(enlaces).each(function (index, element) {
+          element.click();
+        });
+
+        //   console.log(enlaces);
+
+      });
+
+      function consulta(doc, codtip) {
+
+        var stt = new Object();
+        stt.url = baseUrl + tipDocumentos[codtip] + "/" + doc;
+        stt.async = true;
+        stt.crossDomain = true;
+        stt.method = "GET";
 
 
-            $.ajax(stt).done(r => {
-              //var dt = JSON.parse(r.jsonObject);
-              //console.log(dt);
+        $.ajax(stt).done(r => {
+          //var dt = JSON.parse(r.jsonObject);
+          //console.log(dt);
 
-              /*
-              console.log(dt.tipo_identificacion);
-              console.log(dt.numero_identificacion);
-              console.log(dt.primer_nombre);
-              console.log(dt.primer_apellido);
-              console.log(dt.fecha_nacimiento);
-              console.log(dt.sexo);
-              console.log(dt.regimen);
-              console.log(dt.estado);*/
+          /*
+          console.log(dt.tipo_identificacion);
+          console.log(dt.numero_identificacion);
+          console.log(dt.primer_nombre);
+          console.log(dt.primer_apellido);
+          console.log(dt.fecha_nacimiento);
+          console.log(dt.sexo);
+          console.log(dt.regimen);
+          console.log(dt.estado);*/
 
-              console.log(r.codigo);
-              if (r.codigo == 100) {
-                if (codtip < 7)
-                  consulta(doc, codtip + 1);
-              }
-              else {
-                var dt = JSON.parse(r.jsonObject);
-                respuesta(dt);
-                console.log(dt);
-              }
-            });
+          console.log(r.codigo);
+          if (r.codigo == 100) {
+            if (codtip < 7)
+              consulta(doc, codtip + 1);
+          }
+          else {
+            var dt = JSON.parse(r.jsonObject);
+            respuesta(dt);
+            console.log(dt);
+          }
+        });
+      }
+
+      $(".btn-search").click(function (e) {
+
+        if ($("#documento").val() == "") {
+          m = $("#documento").val().split("\t");
+
+        } else {
+          e.preventDefault();
+          $('.search-section .count-register h5 span').text(0);
+
+          if ($("#separator-register").val() == "")
+            m = $("#documento").val().split(" ");
+          else
+            m = $("#documento").val().split($("#separator-register").val());
+
+          $("#documento").val("");
+          $(".table-data tbody").text("");
+          for (var doc of m) {
+            consulta(doc, 1);
           }
 
-$(".btn-search").click(function (e) {
-            e.preventDefault();
-            $('.search-section .count-register h5 span').text(0);
+        }
 
-            if ($("#separator-register").val() == "")
-              m = $("#documento").val().split("\t");
-            else
-              m = $("#documento").val().split($("#separator-register").val());
-
-            $("#documento").val("");
-            $(".table-data tbody").text("");
-            for (var doc of m) {
-              consulta(doc, 1);
-            }
-
-          });
+      });
     });
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
