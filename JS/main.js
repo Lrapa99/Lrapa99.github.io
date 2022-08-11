@@ -1,4 +1,10 @@
-$(document).ready(function () {
+window.onload = () =>{
+    $("#pre-loader").fadeOut()
+    $("body").removeClass("hidden-preoloader")
+
+}
+
+$(document).ready(() => {
 
     //api coosalud
     let m = [];
@@ -116,7 +122,7 @@ $(document).ready(function () {
         $(".table tbody tr").fadeOut(500, function () {
             $(this).remove();
             $(window).scrollTop(0);
-            $('.search-section .count-register h5 span').text($(".table tbody tr").length);
+            $('.search-section .count-register h5  span').text($(".table tbody tr").length);
         });
     });
 
@@ -133,7 +139,7 @@ $(document).ready(function () {
 
     function consulta(doc, codtip) {
 
-        var stt = new Object();
+        let stt = new Object();
         stt.url = baseUrl + tipDocumentos[codtip] + "/" + doc;
         stt.async = true;
         stt.crossDomain = true;
@@ -218,11 +224,3 @@ $btnExportar.addEventListener("click", function (e) {
     }
 
 });
-
-
-//navbar fijo
-
-window.addEventListener("scroll", function () {
-    var header = document.querySelector("header");
-    header.classList.toggle("nav-fijo", window.scrollY > 0);
-})

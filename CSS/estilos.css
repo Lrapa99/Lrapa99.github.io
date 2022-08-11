@@ -1,82 +1,88 @@
-html {
-    scroll-behavior: smooth;
-    /*Comenta la línea (o dale el valor 'auto' a scroll behavior )
-     para probar la diferencia con y sin scroll suavizado*/
-  }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-  }
+body {
+  font-family: 'Poppins', sans-serif;
+}
 
-  .reg-allow {
-    color: #7DCEA0;
-  }
+.reg-allow {
+  color: #7DCEA0;
+}
 
-  .reg-other {
-    color: #5DADE2;
-  }
+.reg-other {
+  color: #5DADE2;
+}
 
-  .reg-departament {
-    color: #F0B27A;
-  }
+.reg-departament {
+  color: #F0B27A;
+}
 
-  .reg-inactive {
-    color: #E74C3C;
-    text-decoration: line-through;
-  }
+.reg-inactive {
+  color: #E74C3C;
+  text-decoration: line-through;
+}
 
-  .icon-contributory {
-    font-size: 30px;
-    display: block;
-  }
+.icon-contributory {
+  font-size: 30px;
+  display: block;
+}
 
-  .search-section {
-    width: 30%;
-  }
+.search-section {
+  width: 25%;
+}
+#buscador{
+  margin-bottom: 5em;
+}
 
-  .table tbody tr {
-    position: relative;
-    border-bottom: 2px solid #EAFAF1;
-    transition: all .2s ease;
-  }
+#autodownload{
+  cursor: pointer;
+}
 
-  .table tbody tr:hover {
-    border-bottom: 2px solid #EAFAF1;
-    background: #EAFAF1;
-  }
+.table tbody tr {
+  position: relative;
+  border-bottom: 2px solid #EAFAF1;
+  transition: all .2s ease;
+}
 
-  footer.page-footer {
-    width: 100%;
-  }
+.table tbody tr:hover {
+  border-bottom: 2px solid #EAFAF1;
+  background: #EAFAF1;
+}
 
-  .container-fluid {
-    width: 95%;
-    margin-top: 5em;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+footer.page-footer {
+  width: 100%;
+}
 
-  .conteo-registros {
-    width: 95%;
-    margin: 2em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
-  }
+.container-fluid {
+ 
+  width: 95%;
+  margin-top: 5em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .navbar {
-    justify-content: space-around;
-  }
+.conteo-registros {
+  background-color: #E8F8F5;
+  border-radius: 10px;
+  padding: 1em;
+  margin: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .nav-fijo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    justify-content: space-around;
-    z-index: 10;
-    transition: all 0.5s ease-out;
-  }
+.navbar {
+  justify-content: space-around;
+}
+
+
+.autodownload{
+  font-weight: 600;
+}
+
+
+#footer{
+  font-weight: 600;
+  color: #45B39D;
+  text-decoration: none;
+}
