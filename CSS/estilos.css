@@ -1,0 +1,82 @@
+html {
+    scroll-behavior: smooth;
+    /*Comenta la línea (o dale el valor 'auto' a scroll behavior )
+     para probar la diferencia con y sin scroll suavizado*/
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .reg-allow {
+    color: #7DCEA0;
+  }
+
+  .reg-other {
+    color: #5DADE2;
+  }
+
+  .reg-departament {
+    color: #F0B27A;
+  }
+
+  .reg-inactive {
+    color: #E74C3C;
+    text-decoration: line-through;
+  }
+
+  .icon-contributory {
+    font-size: 30px;
+    display: block;
+  }
+
+  .search-section {
+    width: 30%;
+  }
+
+  .table tbody tr {
+    position: relative;
+    border-bottom: 2px solid #EAFAF1;
+    transition: all .2s ease;
+  }
+
+  .table tbody tr:hover {
+    border-bottom: 2px solid #EAFAF1;
+    background: #EAFAF1;
+  }
+
+  footer.page-footer {
+    width: 100%;
+  }
+
+  .container-fluid {
+    width: 95%;
+    margin-top: 5em;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .conteo-registros {
+    width: 95%;
+    margin: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar {
+    justify-content: space-around;
+  }
+
+  .nav-fijo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-around;
+    z-index: 10;
+    transition: all 0.5s ease-out;
+  }
