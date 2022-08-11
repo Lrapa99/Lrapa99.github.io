@@ -1,8 +1,3 @@
-window.onload = () =>{
-    $("#pre-loader").fadeOut()
-    $("body").removeClass("hidden-preoloader")
-
-}
 
 $(document).ready(() => {
 
@@ -73,8 +68,8 @@ $(document).ready(() => {
             "<td>" + iconContributory + "<span class='reg-regimen'>" + (response.regimen === "S" ? "SUBSIDIADO" : "CONTRIBUTIVO") + "</span></td>" +
             "<th><span class='reg-direccion'>" + response.direccion + "</span></th>" +
             "<th><span class='reg-celular'>" + response.celular + "</span></th>" +
-            "<td><span>" + "<a target='_blank' class='link_certificate' href='" + "https://sipra.coosalud.com/Reports/Afiliados/GenerarReportesAfiliado.aspx?numDoc=" +
-            response.numero_identificacion.trim() + "&tipoDoc=" + response.tipo_identificacion + "&tipoReporte=CertificadoAfiliacion'><i class='fa-solid fa-file-arrow-down fa-beat-fade'></i></a>" +
+            "<td><span>" + "<a target='_blank' class='link_certificate' href='" + "https://portalautogestion.coosalud.com/certificadoext?tipoDoc=" + response.tipo_identificacion + "&numDoc=" +
+            response.numero_identificacion.trim() + "'><i class='fa-solid fa-file-arrow-down fa-beat-fade m-4'></i></a>" +
             "</tr>"
         );
 

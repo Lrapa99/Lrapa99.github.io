@@ -33,17 +33,18 @@
     <div class="opciones">
       <button type="button" id="btnExportar" class="btn btn-outline-success" style="margin-left: 10px"><i
           class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
-      <button type="button" class="btn btn-outline-success btn-download-certificates"><i
+
+      <button type="button" class="btn btn-outline-success btn-download-certificates" style="display:none;"><i
           class="fa-solid fa-file-arrow-down"></i> Descargar
         Certificados</button>
       <button type="button" class="btn btn-outline-danger btn-remove-data"><i class="fa-solid fa-trash"></i> Limpiar
         Todo</button>
     </div>
-  
+
   </nav>
-  
+
   <div class="container-fluid">
-   
+
     <div class="search-section">
       <form class="form-inline">
         <div class="form-group d-flex" id="buscador">
@@ -55,7 +56,7 @@
         <section class="conteo-registros">
           <div class="count-register">
             <div class="form-group">
-              <h5>Registros <span class="badge rounded-pill text-bg-primary" >0</span></h5>
+              <h5>Registros <span class="badge rounded-pill text-bg-primary">0</span></h5>
             </div>
           </div>
         </section>
@@ -64,37 +65,37 @@
   </form>
   </div>
 
-  <div class='form-check form-switch m-4'>
+  <div class='form-check form-switch m-4' style="display:none;">
     <input class="form-check-input" type="checkbox" role="switch" id='autodownload'>
     <label class="form-check-label autodownload" for='autodownload'>Descarga Automatica</label>
   </div>
 
-    <div id="dates" class="container-fluid">
-      <table id="tabla" class="table table-sm  border border-success  p-2 mb-2 border-opacity-25 text-center">
-        <thead>
-          <tr>
-            <th scope="col">Tipo Doc</th>
-            <th scope="col">Documento</th>
-            <th scope="col">Primer Nombre</th>
-            <th scope="col">Segundo Nombre</th>
-            <th scope="col">Primer Apellido</th>
-            <th scope="col">Segundo Apellidos</th>
-            <th scope="col">Fecha Nacimiento</th>
-            <th scope="col">Sexo</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Departamento</th>
-            <th scope="col">Ips Primaria</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Nivel Sisben</th>
-            <th scope="col">Regimen</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Celular</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider text-success">
-        </tbody>
-      </table>
-    </div>
+  <div id="dates" class="container-fluid">
+    <table id="tabla" class="table table-sm  border border-success  p-2 mb-2 border-opacity-25 text-center">
+      <thead>
+        <tr>
+          <th scope="col">Tipo Doc</th>
+          <th scope="col">Documento</th>
+          <th scope="col">Primer Nombre</th>
+          <th scope="col">Segundo Nombre</th>
+          <th scope="col">Primer Apellido</th>
+          <th scope="col">Segundo Apellidos</th>
+          <th scope="col">Fecha Nacimiento</th>
+          <th scope="col">Sexo</th>
+          <th scope="col">Ciudad</th>
+          <th scope="col">Departamento</th>
+          <th scope="col">Ips Primaria</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Nivel Sisben</th>
+          <th scope="col">Regimen</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">Celular</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider text-success">
+      </tbody>
+    </table>
+  </div>
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
