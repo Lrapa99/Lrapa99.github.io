@@ -48,7 +48,7 @@ $(document).ready(() => {
         let SegundoNombre = response.segundo_nombre == null ? "" : response.segundo_nombre;
         let reg = $(".table tbody tr").length + 1;
         //var nombreCompleto = response.primer_nombre + " " + SegundoNombre + " " + response.primer_apellido + " " + SegundoApellido
-        let iconContributory = response.regimen === "C" ? '<i class="fa-solid fa-comment-dollar"></i>' : '';
+        let iconContributory = response.regimen === "C" ? '<i class="fa-solid fa-comment-dollar fa-fade" style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6"></i>' : '';
 
         $(".table tbody").append("<tr>" +
             "<th><span class='reg-tip-id'>" + response.tipo_identificacion + "</span></th>" +
@@ -94,6 +94,8 @@ $(document).ready(() => {
 
         // Fin Customization
 
+
+        // Contador de registros
         $('.search-section .count-register h5 span').text($(".table tbody tr").length);
 
 
@@ -119,6 +121,20 @@ $(document).ready(() => {
             $(window).scrollTop(0);
             $('.search-section .count-register h5  span').text($(".table tbody tr").length);
         });
+
+        //remover animacion
+
+        const removeanimateExportarExcel = $('.opciones #btnExportar i')
+
+        const removeanimateBorrarTodo = $('.opciones #borrarTodo i')
+
+        //console.log(removeanimateExportarExcel);
+
+        //console.log(removeanimateBorrarTodo);
+
+        removeanimateExportarExcel.removeClass("fa-bounce") && removeanimateBorrarTodo.removeClass("fa-bounce")
+
+        
     });
 
     $(".btn-download-certificates").click(function () {
@@ -161,12 +177,29 @@ $(document).ready(() => {
                     consulta(doc, codtip + 1);
             }
             else {
-                var dt = JSON.parse(r.jsonObject);
+                let dt = JSON.parse(r.jsonObject);
                 respuesta(dt);
                 console.log(dt);
+
+                //agregar animaciones
+
+                const animateExportarExcel = $('.opciones #btnExportar i')
+
+                //console.log(animateExportarExcel);
+
+                const animateBorrarTodo = $('.opciones #borrarTodo i')
+
+                //console.log(animateBorrarTodo);
+
+                r.codigo == 200 ? animateExportarExcel.addClass("fa-bounce") && animateBorrarTodo.addClass("fa-bounce") : ""
+
+
             }
         });
     }
+
+
+    // boton buscar
 
     $(".btn-search").click(function (e) {
 
@@ -186,9 +219,11 @@ $(document).ready(() => {
                 consulta(doc, 1);
             }
 
-        }
 
+
+        }
     });
+
 });
 
 
@@ -219,3 +254,33 @@ $btnExportar.addEventListener("click", function (e) {
     }
 
 });
+
+
+
+//boton para ir arriba
+
+const btn_scrolltop = document.getElementById("btn_scrolltop")
+btn_scrolltop.addEventListener('click', () => {
+    window.scrollTo(0, 0)
+})
+
+window.onscroll = () => {
+    add_btn_scrolltop()
+}
+
+const add_btn_scrolltop = () => {
+    if (window.scrollY < 300) {
+        btn_scrolltop.classList.remove("btn-scrolltop-on")
+    } else {
+        btn_scrolltop.classList.add("btn-scrolltop-on")
+    }
+}
+
+
+
+
+
+
+
+
+

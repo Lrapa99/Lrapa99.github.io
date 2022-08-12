@@ -1,4 +1,6 @@
 
+/* customization */
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -85,4 +87,69 @@ footer.page-footer {
   font-weight: 600;
   color: #45B39D;
   text-decoration: none;
+}
+
+
+
+/* boton para ir arriba */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn-scrolltop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  background: #7DCEA0;
+  color: white;
+  border: 1px solid #7DCEA0;
+  border-radius: 100%;
+  cursor: pointer;
+  transform: translateY(100px);
+  transition: 0.3s;
+}
+
+.btn-scrolltop-on {
+  transform: translateY(0);
+}
+
+
+.btn-scrolltop:after,
+.btn-scrolltop:before{
+	width: 80px;
+	height: 200px;
+	content: '';
+	display: block;
+	background: rgba(255,255,255,0.2);
+	transform: rotate(45deg);
+	top: -60px;
+	position: absolute;
+	transition: none;
+	right:-45%;
+}
+ 
+.btn-scrolltop:before{
+	left: -48%;
+}
+ 
+.btn-scrolltop:hover{
+	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	background:#12C987
+}
+ 
+.btn-scrolltop:hover:after,
+.btn-scrolltop:hover:before{
+	transform: rotate(45deg), scaleX(130%);
+	background: rgba(255,255,255,0.1);
+	transition: all ease 0.5s;
+}
+ 
+.btn-scrolltop:hover:after{
+	right: 130%;
+}
+ 
+.btn-scrolltop:hover:before{
+	left: 130%;
 }
