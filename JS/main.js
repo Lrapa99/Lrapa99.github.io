@@ -171,7 +171,8 @@ $(document).ready(() => {
             console.log(dt.regimen);
             console.log(dt.estado);*/
 
-            console.log(r.codigo);
+            //console.log(r.codigo);
+
             if (r.codigo == 100) {
                 if (codtip < 7)
                     consulta(doc, codtip + 1);
@@ -179,7 +180,7 @@ $(document).ready(() => {
             else {
                 let dt = JSON.parse(r.jsonObject);
                 respuesta(dt);
-                console.log(dt);
+                //console.log(dt);
 
                 //agregar animaciones
 
