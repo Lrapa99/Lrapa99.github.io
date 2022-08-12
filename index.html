@@ -22,6 +22,8 @@
 
 </head>
 
+
+
 <body>
 
   <nav class="navbar animate__animated animate__fadeInDown" style="background-color: #E8F8F5 ;">
@@ -42,79 +44,75 @@
 
   </nav>
 
-  <div class="container-fluid animate__animated animate__fadeInDown">
 
-    <div class="search-section">
-      <form class="form-outline">
-        <div class="form-group d-flex" id="buscador">
-          <input type="text" class="form-control ml-3 form-control-sm text-center" id="documento"
-            placeholder="Ingrese el documento">
-          <button type="button" class="btn btn-outline-success btn-search btn-ml ml-3"><i
-              class="fa-solid fa-magnifying-glass fa-beat" style="--fa-animation-duration: 2s;"></i> Buscar</button>
-        </div>
-        <section class="conteo-registros">
-          <div class="count-register">
-            <div class="form-group">
-              <h5>Registros <span class="badge rounded-pill text-bg-primary">0</span></h5>
-            </div>
+
+  <div class="all-content">
+
+    <div class="container-fluid animate__animated animate__fadeInDown">
+      <div class="search-section">
+        <form class="form-outline">
+          <div class="form-group d-flex" id="buscador">
+            <input type="text" class="form-control ml-3 form-control-sm text-center" id="documento"
+              placeholder="Ingrese el documento">
+            <button type="button" class="btn btn-outline-success btn-search btn-ml ml-3"><i
+                class="fa-solid fa-magnifying-glass fa-beat" style="--fa-animation-duration: 2s;"></i> Buscar</button>
           </div>
-        </section>
+          <section class="conteo-registros">
+            <div class="count-register">
+              <div class="form-group">
+                <h5>Registros <span class="badge rounded-pill text-bg-primary">0</span></h5>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
     </div>
-  </div>
-  </form>
+
+
+    <div class='form-check form-switch m-4' style="display:none;">
+      <input class="form-check-input" type="checkbox" role="switch" id='autodownload'>
+      <label class="form-check-label autodownload" for='autodownload'>Descarga Automatica</label>
+    </div>
+
+    <div id="dates" class="tabla-content animate__animated animate__fadeInDown">
+      <table id="tabla"
+        class="table table-sm border border-success  p-2 mb-2 border-opacity-25 text-center animate__animated animate__fadeInDown">
+        <thead>
+          <tr class="encabezado-tabla">
+            <th scope="col">Tipo Doc</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Primer Nombre</th>
+            <th scope="col">Segundo Nombre</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Segundo Apellidos</th>
+            <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Ips Primaria</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Nivel Sisben</th>
+            <th scope="col">Regimen</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Certificado</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider text-success">
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
-  <div class='form-check form-switch m-4' style="display:none;">
-    <input class="form-check-input" type="checkbox" role="switch" id='autodownload'>
-    <label class="form-check-label autodownload" for='autodownload'>Descarga Automatica</label>
-  </div>
 
-  <div id="dates" class="container-fluid animate__animated animate__fadeInDown">
-    <table id="tabla"
-      class="table table-sm  border border-success  p-2 mb-2 border-opacity-25 text-center animate__animated animate__fadeInDown">
-      <thead>
-        <tr>
-          <th scope="col">Tipo Doc</th>
-          <th scope="col">Documento</th>
-          <th scope="col">Primer Nombre</th>
-          <th scope="col">Segundo Nombre</th>
-          <th scope="col">Primer Apellido</th>
-          <th scope="col">Segundo Apellidos</th>
-          <th scope="col">Fecha Nacimiento</th>
-          <th scope="col">Sexo</th>
-          <th scope="col">Ciudad</th>
-          <th scope="col">Departamento</th>
-          <th scope="col">Ips Primaria</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Nivel Sisben</th>
-          <th scope="col">Regimen</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">Celular</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider text-success">
-      </tbody>
-    </table>
-  </div>
 
+  <!--Boton para ir arriba-->
 
   <button class="btn-scrolltop" id="btn_scrolltop">
     <i class="fa-solid fa-angle-up fa-beat"></i>
   </button>
 
-
-  <!--Scripts-->
-
-  <script src="https://kit.fontawesome.com/6f4c79b44d.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
-  <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
-  <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
-  <script src="JS/main.js"></script>
 
   <!--Footer-->
   <footer class="page-footer font-small stylish-color-dark pt-4 mt-4 animate__animated animate__fadeInDown">
@@ -180,6 +178,22 @@
 
   </footer>
   <!--/.Footer-->
+
+
+
+  <!--Scripts-->
+
+  <script src="https://kit.fontawesome.com/6f4c79b44d.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+  <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+
 </body>
 
 </html>
