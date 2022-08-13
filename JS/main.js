@@ -285,7 +285,7 @@ $(document).ready(() => {
 
     const contadorRegistros = document.querySelector("#contador-registros")
 
-    console.log(contadorRegistros);
+    //console.log(contadorRegistros);
 
 
     load()
@@ -304,7 +304,7 @@ $(document).ready(() => {
 
             contadorRegistros.classList.add("text-bg-warning")
 
-            console.log(contadorRegistros);
+            //console.log(contadorRegistros);
 
         } else {
 
@@ -312,7 +312,7 @@ $(document).ready(() => {
 
             contadorRegistros.classList.add("text-bg-primary")
 
-            console.log(contadorRegistros);
+            //console.log(contadorRegistros);
         }
 
 
