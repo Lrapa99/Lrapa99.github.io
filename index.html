@@ -13,6 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="CSS/estilos.css">
+  <link rel="stylesheet" href="SASS/darkmode.css">
+
+
 
 
   <!-- ↓↓ FavIcon ↓↓ -->
@@ -26,12 +29,12 @@
 
 <body>
 
-  <nav class="navbar animate__animated animate__fadeInDown" style="background-color: #E8F8F5 ;">
+  <nav class="navbar animate__animated animate__fadeInDown">
     <!-- Navbar content -->
-    <img src="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png" alt="MDN">
-
+      <img src="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png" alt="MDN" id="logo-cmd" >
+    
     <div class="opciones">
-      <button type="button" id="btnExportar" class="btn btn-outline-success" style="margin-left: 10px"><i
+      <button type="button" id="btnExportar" class="btn btn-outline-success"><i
           class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
 
       <button type="button" class="btn btn-outline-success btn-download-certificates" style="display:none;"><i
@@ -40,6 +43,14 @@
       <button type="button" class="btn btn-outline-danger btn-remove-data" id="borrarTodo"><i
           class="fa-solid fa-trash"></i> Limpiar
         Todo</button>
+      <div>
+        <button class="switch" id="switch">
+          <span><i class="fa-solid fa-sun"></i></span>
+          <span><i class="fa-solid fa-moon"></i></span>
+        </button>
+
+      </div>
+
     </div>
 
   </nav>
@@ -60,7 +71,7 @@
           <section class="conteo-registros">
             <div class="count-register">
               <div class="form-group">
-                <h5>Registros <span class="badge rounded-pill text-bg-primary">0</span></h5>
+                <h5>Registros <span class="badge rounded-pill text-bg-primary" id="contador-registros">0</span></h5>
               </div>
             </div>
           </section>
@@ -172,7 +183,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3 text-center">
 
-      <a href="#" id="footer">Consulta Coosalud 2.0</a> © 2022
+      <a href="#" id="footer">Consulta Coosalud 2.0</a><span class="año-footer"> © 2022</span>
     </div>
     <!--/.Copyright-->
 
@@ -193,6 +204,8 @@
     integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
     crossorigin="anonymous"></script>
   <script src="JS/main.js"></script>
+
+
 
 </body>
 

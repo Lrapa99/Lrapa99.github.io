@@ -134,7 +134,7 @@ $(document).ready(() => {
 
         removeanimateExportarExcel.removeClass("fa-bounce") && removeanimateBorrarTodo.removeClass("fa-bounce")
 
-        
+
     });
 
     $(".btn-download-certificates").click(function () {
@@ -225,57 +225,133 @@ $(document).ready(() => {
         }
     });
 
+
+
+    //exportar excel
+
+    const $btnExportar = document.querySelector("#btnExportar"),
+        $tabla = document.querySelector("#tabla");
+    $btnExportar.addEventListener("click", function (e) {
+
+        if ($(".table tbody tr").length === 0) {
+            e.preventDefault();
+        } else {
+            e.preventDefault();
+            let tableExport = new TableExport($tabla, {
+                exportButtons: false,
+                filename: "ConsultaCoosalud",
+                sheetname: "ResultadosConsultaMasiva",
+            });
+            let datos = tableExport.getExportData();
+            let preferenciasDocumento = datos.tabla.xlsx;
+            tableExport.export2file(preferenciasDocumento.data,
+                preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename,
+                preferenciasDocumento.fileExtension,
+                preferenciasDocumento.merges,
+                preferenciasDocumento.RTL,
+                preferenciasDocumento.sheetname);
+        }
+
+    });
+
+
+
+    //boton para ir arriba
+
+    const btn_scrolltop = document.getElementById("btn_scrolltop")
+    btn_scrolltop.addEventListener('click', () => {
+        window.scrollTo(0, 0)
+    })
+
+    window.onscroll = () => {
+        add_btn_scrolltop()
+    }
+
+    const add_btn_scrolltop = () => {
+        if (window.scrollY < 300) {
+            btn_scrolltop.classList.remove("btn-scrolltop-on")
+        } else {
+            btn_scrolltop.classList.add("btn-scrolltop-on")
+        }
+    }
+
+
+
+    //boton dark mode
+
+    const bdark = document.querySelector("#switch")
+    const body = document.querySelector("body")
+
+    const contadorRegistros = document.querySelector("#contador-registros")
+
+    console.log(contadorRegistros);
+
+
+    load()
+
+
+    bdark.addEventListener("click", e => {
+
+        body.classList.toggle("dark-mode")
+
+        bdark.classList.toggle("active")
+
+
+        if (bdark.classList.contains("active")) {
+
+            contadorRegistros.classList.remove("text-bg-primary")
+
+            contadorRegistros.classList.add("text-bg-warning")
+
+            console.log(contadorRegistros);
+
+        } else {
+
+            contadorRegistros.classList.remove("text-bg-warning")
+
+            contadorRegistros.classList.add("text-bg-primary")
+
+            console.log(contadorRegistros);
+        }
+
+
+        store(body.classList.contains("dark-mode"))
+
+
+
+    })
+
+
+    function load() {
+
+        const darkMode = localStorage.getItem("dark-mode")
+
+        if (!darkMode) {
+            store("false")
+        } else if (darkMode == "true") {
+            body.classList.add("dark-mode")
+            bdark.classList.toggle("active")
+
+            contadorRegistros.classList.remove("text-bg-primary")
+
+            contadorRegistros.classList.add("text-bg-warning")
+        }
+
+    }
+
+
+    function store(value) {
+        localStorage.setItem("dark-mode", value)
+    }
+
+    //console.log(bdark);
+    //console.log(body);
+
 });
 
 
-//exportar excel
 
-const $btnExportar = document.querySelector("#btnExportar"),
-    $tabla = document.querySelector("#tabla");
-$btnExportar.addEventListener("click", function (e) {
-
-    if ($(".table tbody tr").length === 0) {
-        e.preventDefault();
-    } else {
-        e.preventDefault();
-        let tableExport = new TableExport($tabla, {
-            exportButtons: false,
-            filename: "ConsultaCoosalud",
-            sheetname: "ResultadosConsultaMasiva",
-        });
-        let datos = tableExport.getExportData();
-        let preferenciasDocumento = datos.tabla.xlsx;
-        tableExport.export2file(preferenciasDocumento.data,
-            preferenciasDocumento.mimeType,
-            preferenciasDocumento.filename,
-            preferenciasDocumento.fileExtension,
-            preferenciasDocumento.merges,
-            preferenciasDocumento.RTL,
-            preferenciasDocumento.sheetname);
-    }
-
-});
-
-
-
-//boton para ir arriba
-
-const btn_scrolltop = document.getElementById("btn_scrolltop")
-btn_scrolltop.addEventListener('click', () => {
-    window.scrollTo(0, 0)
-})
-
-window.onscroll = () => {
-    add_btn_scrolltop()
-}
-
-const add_btn_scrolltop = () => {
-    if (window.scrollY < 300) {
-        btn_scrolltop.classList.remove("btn-scrolltop-on")
-    } else {
-        btn_scrolltop.classList.add("btn-scrolltop-on")
-    }
-}
 
 
 
