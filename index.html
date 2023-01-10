@@ -1,212 +1,464 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Get-Users</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/CSS/main.css" />
+  </head>
+  <body data-dark class="lightMode">
+    <!-- Inicio Progress Bar -->
+    <section
+      id="initial-loading"
+      class="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center"
+    >
+      <a
+        class="fs-1 my-3 text-dark text-decoration-none d-flex align-items-center animate__animated animate__slideInDown"
+        ><b>Get</b><i class="bx bx-user-check text-danger"></i
+        ><b><i>Users </i></b></a
+      >
+      <div class="progress animate__animated animate__flash"></div>
+      <aside id="initial-loading-icons" class="position-absolute bottom-0">
+        <a
+          href="https://github.com/Lrapa99"
+          title="Github"
+          rel="noopener"
+          target="_blank"
+          class="btn p-0"
+          ><i class="bx bxl-github fs-4"></i
+        ></a>
+        <a
+          href="https://api.whatsapp.com/send?phone=573002499164"
+          title="Whatsapp"
+          rel="noopener"
+          target="_blank"
+          class="btn p-0"
+          ><i class="bx bxl-whatsapp fs-4"></i
+        ></a>
+        <a
+          href="http://m.me/lrapa99"
+          title="Messenger"
+          rel="noopener"
+          target="_blank"
+          class="btn p-0"
+          ><i class="bx bxl-messenger fs-4"></i
+        ></a>
+        <a
+          href="https://www.linkedin.com/in/lrapa99/"
+          title="Linkedin"
+          rel="noopener"
+          target="_blank"
+          class="btn p-0"
+          ><i class="bx bxl-linkedin-square fs-4"></i
+        ></a>
+      </aside>
+    </section>
+    <!-- Fin Progress Bar -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ConsultaCoosalud</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="CSS/estilos.css">
-  <link rel="stylesheet" href="SASS/darkmode.css">
+    <div id="all-content-app" class="container-fluid d-none">
+      <!--inicio navbar -->
+      <nav
+        class="navbar mb-4 animate__animated animate__fadeInDown shadow rounded"
+      >
+        <div class="container-fluid d-flex flex-column flex-lg-row">
+          <a
+            class="navbar-brand d-flex justify-content-center align-items-center p-3 p-lg-0"
+            ><b>Get</b><i class="bx bx-user-check fs-1 text-danger"></i
+            ><b><i>Users </i></b></a
+          >
+          <form class="d-flex p-3 p-lg-0" role="search">
+            <input
+              id="allDocuments"
+              class="form-control me-2"
+              type="search"
+              placeholder="Documento"
+              aria-label="Search"
+              required
+            />
+            <button
+              class="btn btn-danger bg-opacity-75"
+              id="btn-buscar"
+              type="submit"
+            >
+              Buscar
+            </button>
+          </form>
 
-
-
-
-  <!-- ↓↓ FavIcon ↓↓ -->
-  <link rel="icon" type="image/png" sizes="32x32"
-    href="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png">
-  <!-- ↑↑ FavIcon ↑↑ -->
-
-</head>
-
-
-
-<body>
-
-  <nav class="navbar animate__animated animate__fadeInDown">
-    <!-- Navbar content -->
-      <img src="https://www.calidadmedicaips.com/wp-content/uploads/2018/07/logo-clidad.png" alt="MDN" id="logo-cmd" >
-    
-    <div class="opciones">
-      <button type="button" id="btnExportar" class="btn btn-outline-success"><i
-          class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
-
-      <button type="button" class="btn btn-outline-success btn-download-certificates" style="display:none;"><i
-          class="fa-solid fa-file-arrow-down"></i> Descargar
-        Certificados</button>
-      <button type="button" class="btn btn-outline-danger btn-remove-data" id="borrarTodo"><i
-          class="fa-solid fa-trash"></i> Limpiar
-        Todo</button>
-      <div>
-        <button class="switch" id="switch">
-          <span><i class="fa-solid fa-sun"></i></span>
-          <span><i class="fa-solid fa-moon"></i></span>
-        </button>
-
-      </div>
-
-    </div>
-
-  </nav>
-
-
-
-  <div class="all-content">
-
-    <div class="container-fluid animate__animated animate__fadeInDown">
-      <div class="search-section">
-        <form class="form-outline">
-          <div class="form-group d-flex" id="buscador">
-            <input type="text" class="form-control ml-3 form-control-sm text-center" id="documento"
-              placeholder="Ingrese el documento">
-            <button type="button" class="btn btn-outline-success btn-search btn-ml ml-3"><i
-                class="fa-solid fa-magnifying-glass fa-beat" style="--fa-animation-duration: 2s;"></i> Buscar</button>
-          </div>
-          <section class="conteo-registros">
-            <div class="count-register">
-              <div class="form-group">
-                <h5>Registros <span class="badge rounded-pill text-bg-primary" id="contador-registros">0</span></h5>
-              </div>
-            </div>
+          <section id="content-icons" class="py-3 p-lg-0">
+            <!-- <a href="#" title="Modo claro" class="btn btn-lightMode"
+              ><i id="btn-lightMode" class="bx bx-sun fs-3"></i
+            ></a> -->
+            <a href="#" title="Modo oscuro" class="btn"
+              ><i id="btn-darkMode" class="bx bx-moon fs-3"></i
+            ></a>
+            <a
+              href="https://github.com/Lrapa99"
+              title="Github"
+              rel="noopener"
+              target="_blank"
+              class="btn"
+              ><i class="bx bxl-github fs-3"></i
+            ></a>
+            <a
+              href="https://api.whatsapp.com/send?phone=573002499164"
+              title="Whatsapp"
+              rel="noopener"
+              target="_blank"
+              class="btn"
+              ><i class="bx bxl-whatsapp fs-3"></i
+            ></a>
+            <a
+              href="http://m.me/lrapa99"
+              title="Messenger"
+              rel="noopener"
+              target="_blank"
+              class="btn"
+              ><i class="bx bxl-messenger fs-3"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/lrapa99/"
+              title="Linkedin"
+              rel="noopener"
+              target="_blank"
+              class="btn"
+              ><i class="bx bxl-linkedin-square fs-3"></i
+            ></a>
+            <!--inicio btn version -->
+            <a
+              id="btn-version"
+              title="Historial de Cambios"
+              class="btn d-none d-lg-inline-block bg-transparent fw-bold position-relative"
+            >
+              v.2.1
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-opacity-75"
+              >
+                3+
+              </span>
+            </a>
+            <!--fin btn version -->
           </section>
-        </form>
+        </div>
+      </nav>
+      <!--fin navbar -->
+
+      <!--inicio info users -->
+      <div id="show-info-users" class="container"></div>
+      <!--fin info users -->
+
+      <!--inicio Loader -->
+      <div
+        id="loader"
+        class="container d-flex justify-content-center loader-hidden"
+      >
+        <div class="dots"></div>
+      </div>
+      <!--fin Loader -->
+
+      <main>
+        <div class="container-fluid px-5">
+          <div class="table-responsive">
+            <!-- inicio Table -->
+            <table
+              id="tabla"
+              class="table table-sm align-middle text-center caption-top animate__animated animate__fadeInDown"
+            >
+              <caption>
+                N°_Usuari@s:
+                <span
+                  id="count-data-table"
+                  class="badge count text-bg-danger bg-opacity-75"
+                  >0</span
+                >
+                <a
+                  class="btn loader-hidden"
+                  id="btn-clear-all"
+                  title="Limpiar todo"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-archive-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"
+                    />
+                  </svg>
+                  Limpiar
+                </a>
+                <a class="btn loader-hidden" id="btnExportar" title="Exportar">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-file-excel-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5.884 4.68 8 7.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 8l2.233 2.68a.5.5 0 0 1-.768.64L8 8.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 8 5.116 5.32a.5.5 0 1 1 .768-.64z"
+                    />
+                  </svg>
+                  Excel
+                </a>
+              </caption>
+
+              <thead>
+                <tr class="encabezado-tabla">
+                  <th scope="col">T.Doc</th>
+                  <th scope="col">Doc</th>
+                  <th scope="col">P.Nombre</th>
+                  <th scope="col">S.Nombre</th>
+                  <th scope="col">P.Apellido</th>
+                  <th scope="col">S.Apellido</th>
+                  <th scope="col">F.Nac</th>
+                  <th scope="col">Sexo</th>
+                  <th scope="col">Ciudad</th>
+                  <th scope="col">Departamento</th>
+                  <th scope="col">Ips.Primaria</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">N.Sisben</th>
+                  <th scope="col">Regimen</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Celular</th>
+                  <th scope="col">Certificado</th>
+                </tr>
+              </thead>
+              <tbody
+                class="table-group-divider border-top-color-danger text-dark"
+              ></tbody>
+            </table>
+            <!-- fin Table -->
+          </div>
+
+          <!--inicio Not Search -->
+          <section
+            id="not-search"
+            class="d-flex mt-3 flex-column justify-content-center align-items-center"
+          >
+            <picture class="text-center animate__animated animate__pulse">
+              <img
+                class="w-50 opacity-50"
+                src="assets/img/not_search.png"
+                alt="Not_Search"
+              />
+              <p class="fs-4 animate__animated animate__fadeInUp">
+                <b>¡Sin Búsquedas!</b>
+              </p>
+            </picture>
+          </section>
+          <!--fin Not Search -->
+        </div>
+      </main>
+
+      <!-- inicio Footer -->
+      <footer class="w-100 text-center p-3 animate__animated animate__fadeInUp">
+        <small>&copy; 2023 Powered by❤️<b>Lrapa.</b></small>
+      </footer>
+      <!-- fin Footer -->
+
+      <!-- inicio Template -->
+      <template id="template-row-data" class="text-center">
+        <tr>
+          <th><span id="t-doc"></span></th>
+          <th><span id="num-doc"></span></th>
+          <th><span id="name1"> </span></th>
+          <td><span id="name2"> </span></td>
+          <th><span id="lastname1"> </span></th>
+          <td><span id="lastname2"></span></td>
+          <td><span id="f-nac"> </span></td>
+          <td><span id="sexo"></span></td>
+          <td><span id="ciudad"></span></td>
+          <td><span id="depart"> </span></td>
+          <td><span id="ips"> </span></td>
+          <th><span id="estado"> </span></th>
+          <td><span id="sisben"> </span></td>
+          <th><span id="regimen"> </span></th>
+          <td><span id="direccion"> </span></td>
+          <td><span id="celular"> </span></td>
+          <td><span id="certificado"> </span></td>
+        </tr>
+      </template>
+      <!-- fin Template -->
+    </div>
+
+    <!--inicio Toasts -->
+    <button type="button" class="btn btn-primary d-none" id="liveToastBtn">
+      Show live toast
+    </button>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div
+        id="liveToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header">
+          <!-- <img src="..." class="rounded me-2" alt="..." /> -->
+          <strong id="toast-strong-title" class="me-auto"></strong>
+          <small id="toast-small-title"></small>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div id="toast-msg-body" class="toast-body"></div>
       </div>
     </div>
+    <!--fin Toasts -->
 
+    <!-- Button trigger modal cambios en la version -->
+    <button
+      type="button"
+      class="btn d-none"
+      id="show-modal"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      show modal version
+    </button>
 
-    <div class='form-check form-switch m-4' style="display:none;">
-      <input class="form-check-input" type="checkbox" role="switch" id='autodownload'>
-      <label class="form-check-label autodownload" for='autodownload'>Descarga Automatica</label>
-    </div>
-
-    <div id="dates" class="tabla-content animate__animated animate__fadeInDown">
-      <table id="tabla"
-        class="table table-sm border border-success  p-2 mb-2 border-opacity-25 text-center animate__animated animate__fadeInDown">
-        <thead>
-          <tr class="encabezado-tabla">
-            <th scope="col">Tipo Doc</th>
-            <th scope="col">Documento</th>
-            <th scope="col">Primer Nombre</th>
-            <th scope="col">Segundo Nombre</th>
-            <th scope="col">Primer Apellido</th>
-            <th scope="col">Segundo Apellidos</th>
-            <th scope="col">Fecha Nacimiento</th>
-            <th scope="col">Sexo</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Departamento</th>
-            <th scope="col">Ips Primaria</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Nivel Sisben</th>
-            <th scope="col">Regimen</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Celular</th>
-            <th scope="col">Certificado</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider text-success">
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
-
-
-  <!--Boton para ir arriba-->
-
-  <button class="btn-scrolltop" id="btn_scrolltop">
-    <i class="fa-solid fa-angle-up fa-beat"></i>
-  </button>
-
-
-  <!--Footer-->
-  <footer class="page-footer font-small stylish-color-dark pt-4 mt-4 animate__animated animate__fadeInDown">
-
-    <hr>
-
-    <!--Call to action
-  <div class="row text-center py-3">
-      <div class="col-md-12">
-            <ul>
-                <li class="list-inline-item">
-                    <h5 class="mb-1">Register for free</h5>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#!" class="btn btn-danger btn-rounded">Sign up!</a>
-                </li>
+    <!-- Modal cambios en la version -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-6" id="exampleModalLabel">
+              Historial de cambios
+              <span
+                class="badge text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2"
+                >v.2.1</span
+              >
+            </h1>
+            <button
+              type="button"
+              id="btn-close-v"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-unstyled d-flex flex-column text-muted">
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2">Diseño moderno.</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2">Suaves animaciones.</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2">Interface responsive.</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2">Alertas de notificación.</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2"
+                  >Se consultarán sólo registros únicos, aunque el usuario
+                  ingrese valores duplicados.</small
+                >
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2"
+                  >Se pueden obtener hasta
+                  <mark><strong>3000</strong></mark> registros.</small
+                >
+              </li>
+              <li class="d-flex align-items-center">
+                <i class="bx bx-caret-right"></i>
+                <b
+                  class="badge text-black bg-warning bg-opacity-10 border border-warning border-opacity-10 rounded-2 text-wrap"
+                  ><i>New</i></b
+                >
+                <small class="ps-2"
+                  >Cambio de tema <strong>DarkMode</strong> habilitado.</small
+                >
+              </li>
             </ul>
+          </div>
+        </div>
       </div>
-  </div>
-  -->
-    <!--/.Call to action-->
-
-
-    <!--Social buttons
-  <div class="text-center social-buttons">
-      <ul class="list-unstyled list-inline">
-          <li class="list-inline-item">
-              <a class="btn-floating btn-sm btn-fb mx-1">
-                  <i class="fab fa-facebook"> </i>
-              </a>
-          </li>
-          <li class="list-inline-item">
-              <a class="btn-floating btn-sm btn-tw mx-1">
-                  <i class="fab fa-twitter"> </i>
-              </a>
-          </li>
-          <li class="list-inline-item">
-              <a class="btn-floating btn-sm btn-gplus mx-1">
-                  <i class="fab fa-google-plus"> </i>
-              </a>
-          </li>
-          <li class="list-inline-item">
-              <a class="btn-floating btn-sm btn-li mx-1">
-                  <i class="fab fa-linkedin"> </i>
-              </a>
-          </li>
-          <li class="list-inline-item">
-              <a class="btn-floating btn-sm btn-dribbble mx-1">
-                  <i class="fab fa-dribbble"> </i>
-              </a>
-          </li>
-      </ul>
-  </div>
-  -->
-    <!--/.Social buttons-->
-
-    <!--Copyright-->
-    <div class="footer-copyright py-3 text-center">
-
-      <a href="#" id="footer">Consulta Coosalud 2.0</a><span class="año-footer"> © 2022</span>
     </div>
-    <!--/.Copyright-->
 
-  </footer>
-  <!--/.Footer-->
-
-
-
-  <!--Scripts-->
-
-  <script src="https://kit.fontawesome.com/6f4c79b44d.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
-  <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
-  <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
-  <script src="JS/main.js"></script>
-
-
-
-</body>
-
+    <!--Btn ScrollTop-->
+    <button class="btn-scrolltop" id="btn_scrolltop">
+      <i class="bx bx-chevron-up fs-3"></i>
+    </button>
+    <!-- Table Export -->
+    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+    <!-- Table Export -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js" type="module"></script>
+  </body>
 </html>
