@@ -18,15 +18,26 @@ export default function query(url, typesDoc) {
 
         const arrSinDuplicado = Array.from(allDoc); //!convertimos en un array
 
-        if (arrSinDuplicado.length > 3000) {
-          arrSinDuplicado.splice(3000, arrSinDuplicado.length);
-        }
+        const ok = arrSinDuplicado.map((value) => {
+          if (value.length >= 5) {
+            if (value.match("^[0-9]*$")) {
+              return true;
+            }
+          }
+        });
 
-        // console.log(arrSinDuplicado.length);
+        // console.log(ok.includes(true));
 
-        if (arrSinDuplicado.length > 50) {
-          //!mostras alerta👇
-          $showInfoUsers.innerHTML = `
+        if (ok.includes(true)) {
+          if (arrSinDuplicado.length > 3000) {
+            arrSinDuplicado.splice(3000, arrSinDuplicado.length);
+          }
+
+          // console.log(arrSinDuplicado.length);
+
+          if (arrSinDuplicado.length > 50) {
+            //!mostras alerta👇
+            $showInfoUsers.innerHTML = `
                   <div
           class="alert alert-warning animate__animated animate__fadeInDown alert-dismissible fade show"
           role="alert"
@@ -42,30 +53,31 @@ de la cantidad de datos a consultar</strong>, por favor sea paciente...!</span>
             aria-label="Close"
           ></button>
         </div>`;
-          //!mostrar alerta☝️
-        }
-        setTimeout(() => {
-          d.querySelector(".alert").classList.remove("animate__fadeInDown");
-        }, 1000);
+            //!mostrar alerta☝️
+          }
+          setTimeout(() => {
+            d.querySelector(".alert").classList.remove("animate__fadeInDown");
+          }, 1000);
 
-        $inputDocs.value = "";
-        if (arrSinDuplicado.length <= 1000) {
-          (async () => {
-            $loader.classList.replace("loader-hidden", "loader-visible");
-            const promise = await Promise.all(
-              await arrSinDuplicado.map(async (el) => {
-                await getData(url, typesDoc, el);
-              })
-            );
-            // console.log("promise finished");
-            $loader.classList.replace("loader-visible", "loader-hidden");
-            inactiveScroll(0);
-          })();
-        }
+          $inputDocs.value = "";
+          if (arrSinDuplicado.length <= 1000) {
+            (async () => {
+              $loader.classList.replace("loader-hidden", "loader-visible");
+              const promise = await Promise.all(
+                await arrSinDuplicado.map(async (el) => {
+                  await getData(url, typesDoc, el);
+                })
+              );
+              // console.log("promise finished");
+              $loader.classList.replace("loader-visible", "loader-hidden");
+              inactiveScroll(0);
+            })();
+          }
 
-        if (arrSinDuplicado.length > 1000 && arrSinDuplicado.length <= 3000) {
-          //! async Promises
-          asyncPromises(arrSinDuplicado, { url, typesDoc });
+          if (arrSinDuplicado.length > 1000 && arrSinDuplicado.length <= 3000) {
+            //! async Promises
+            asyncPromises(arrSinDuplicado, { url, typesDoc });
+          }
         }
       }
     }
