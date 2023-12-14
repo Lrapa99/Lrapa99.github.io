@@ -1,84 +1,47 @@
 import asyncPromises from "./asyncPromises.js";
 import getData from "./getFetch.js";
-import inactiveScroll from "./inactiveScroll.js";
 
-const d = document,
-  $inputDocs = d.getElementById("allDocuments"),
-  $loader = d.getElementById("loader"),
-  $showInfoUsers = d.getElementById("show-info-users");
+const $inputDocs = $("#allDocuments");
+
+function isValidDocument(value) {
+  return value.length >= 5 && /^[0-9]*$/.test(value);
+}
+
+function processDocuments(url, typesDoc, documents) {
+  const uniqueDocuments = Array.from(new Set(documents));
+
+  const validDocuments = uniqueDocuments.filter(isValidDocument);
+
+  if (validDocuments.length > 3000) {
+    validDocuments.splice(3000, validDocuments.length);
+  }
+
+  $inputDocs.val("");
+
+  if (validDocuments.length <= 1000) {
+    $(".spinner").show("slow");
+    $.when(...validDocuments.map((el) => getData(url, typesDoc, el))).then(
+      () => {
+        // console.log("Promise finished");
+        $(".spinner").hide("slow");
+      }
+    );
+  } else if (validDocuments.length > 1000 && validDocuments.length <= 3000) {
+    asyncPromises(validDocuments, { url, typesDoc });
+  }
+}
 
 export default function query(url, typesDoc) {
-  d.addEventListener("click", (e) => {
-    if (e.target.matches("#btn-buscar")) {
-      let inputDocsValues = $inputDocs.value || null;
+  $(document).on("click", "#btn-buscar", function (e) {
+    if ($(this).is(e.target) || $(e.target).closest(this).length > 0) {
+      let inputDocsValues = $inputDocs.val() || null;
       if (inputDocsValues) {
         e.preventDefault();
 
-        const allDoc = new Set(inputDocsValues.split(" ")); //!obtenemos valores unicos
+        const documents = inputDocsValues.split(" ");
+        // console.log(documents);
 
-        const arrSinDuplicado = Array.from(allDoc); //!convertimos en un array
-
-        const ok = arrSinDuplicado.map((value) => {
-          if (value.length >= 5) {
-            if (value.match("^[0-9]*$")) {
-              return true;
-            }
-          }
-        });
-
-        // console.log(ok.includes(true));
-
-        if (ok.includes(true)) {
-          if (arrSinDuplicado.length > 3000) {
-            arrSinDuplicado.splice(3000, arrSinDuplicado.length);
-          }
-
-          // console.log(arrSinDuplicado.length);
-
-          if (arrSinDuplicado.length > 50) {
-            //!mostras alerta👇
-            $showInfoUsers.innerHTML = `
-                  <div
-          class="alert alert-warning animate__animated animate__fadeInDown alert-dismissible fade show"
-          role="alert"
-        >
-          <span id="msg-info-users">¡<strong>Hola</strong>, Éste proceso   
-puede tardar unos minutos,<strong> dependiendo de su velocidad de internet y   
-de la cantidad de datos a consultar</strong>, por favor sea paciente...!</span>
-          <button
-          id="btn-close-alert"
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>`;
-            //!mostrar alerta☝️
-          }
-          setTimeout(() => {
-            d.querySelector(".alert").classList.remove("animate__fadeInDown");
-          }, 1000);
-
-          $inputDocs.value = "";
-          if (arrSinDuplicado.length <= 1000) {
-            (async () => {
-              $loader.classList.replace("loader-hidden", "loader-visible");
-              const promise = await Promise.all(
-                await arrSinDuplicado.map(async (el) => {
-                  await getData(url, typesDoc, el);
-                })
-              );
-              // console.log("promise finished");
-              $loader.classList.replace("loader-visible", "loader-hidden");
-              inactiveScroll(0);
-            })();
-          }
-
-          if (arrSinDuplicado.length > 1000 && arrSinDuplicado.length <= 3000) {
-            //! async Promises
-            asyncPromises(arrSinDuplicado, { url, typesDoc });
-          }
-        }
+        processDocuments(url, typesDoc, documents);
       }
     }
   });

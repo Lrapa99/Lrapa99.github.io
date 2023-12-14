@@ -1,19 +1,17 @@
-import toasts from "./toasts.js";
 import response from "./response.js";
-
-const d = document,
-  $btnToast = d.getElementById("liveToastBtn"),
-  $showInfoUsers = d.getElementById("show-info-users");
+import toast from "./toast.js";
 
 export default async function getData(url, typesDoc, doc, options = {}) {
   try {
     //!abort controller
+    let abortedCount = 0;
     for (let num in typesDoc) {
-      const { timeout = 180000 } = options;
+      const { timeout = 8000 } = options;
       const controller = new AbortController();
       const id = setTimeout(() => {
         // console.log("aborting");
         controller.abort();
+        abortedCount++;
       }, timeout);
       // console.log("inicialTimeOut", id);
 
@@ -28,7 +26,7 @@ export default async function getData(url, typesDoc, doc, options = {}) {
       if (json.codigo == 100 && num == 7) {
         // console.log(json.codigo, doc, num);
         throw {
-          name: "user-not-found",
+          name: "usuario no encontrado",
           id: doc,
         };
       }
@@ -38,39 +36,24 @@ export default async function getData(url, typesDoc, doc, options = {}) {
         response(result);
         new Set(result);
       }
+
+      // Mostrar la tostada solo si todas las solicitudes fueron abortadas
+      if (abortedCount === Object.keys(typesDoc).length) {
+        toast(
+          `Todas las solicitudes fueron abortadas, por favor intenta nuevamente.`,
+          "warning",
+          "<i class='bx bxs-error bx-tada' ></i>"
+        );
+      }
     }
   } catch (error) {
-    const userNotFound = error.name === "user-not-found",
-      aborted = error.name === "AbortError";
-
+    const userNotFound = error.name === "usuario no encontrado";
     if (userNotFound) {
-      toasts(
-        "❌Failed",
-        `${error.name}`,
-        `No se encontraron datos para éste documento: <strong>${error.id}</strong>, por favor intente nuevamente.`
+      toast(
+        `No se encontraron datos para éste documento: <strong>${error.id}</strong>, por favor intente nuevamente.`,
+        "danger",
+        "<i class='bx bxs-error bx-tada' ></i>"
       );
-      $btnToast.click();
-    }
-
-    if (aborted) {
-      //!mostras alerta👇
-      $showInfoUsers.innerHTML = `
-                  <div
-          class="alert alert-danger animate__animated animate__pulse alert-dismissible fade show"
-          role="alert"
-        >
-          <span id="msg-info-users">¡<strong>Hola</strong>, En el momento presentamos inconvenientes para obtener los datos, ésto puede tardar unos minutos, <strong>si el inconveniente persiste</strong>, por favor inténtelo más tarde...!</span>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>`;
-      //!mostrar alerta☝️
-      setTimeout(() => {
-        d.querySelector(".alert").classList.remove("animate__pulse");
-      }, 1000);
     }
   }
 }
